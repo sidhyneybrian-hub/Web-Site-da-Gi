@@ -246,7 +246,7 @@ window.onload = function () {
             } else if (!gameActive) {
                 statusText.textContent = 'Clique em Reiniciar para jogar novamente.';
             } else {
-                statusText.textContent = `Vez de ${currentPlayer === 'X' ? 'X (GIF 20)' : 'O (GIF 18)'}`;
+                statusText.textContent = `É a vez do ${currentPlayer === 'X' ? 'Gato Dança' : 'Gato Gira'}`;
             }
         }
 
@@ -291,7 +291,8 @@ window.onload = function () {
             if (result === 'draw') {
                 statusText.textContent = 'Empate! 🟰';
             } else {
-                statusText.textContent = `${result} venceu!`;
+                const winner = result === 'X' ? 'Gato Dança' : 'Gato Gira';
+                statusText.textContent = `${winner} venceu!`;
             }
             cells.forEach(cell => cell.disabled = true);
         }
