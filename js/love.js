@@ -246,7 +246,7 @@ window.onload = function () {
             } else if (!gameActive) {
                 statusText.textContent = 'Clique em Reiniciar para jogar novamente.';
             } else {
-                statusText.textContent = `É a vez do ${currentPlayer === '' ? 'X (Gato Dança)' : '(Gato gira)
+                statusText.textContent = `Vez de ${currentPlayer === 'X' ? 'X (GIF 20)' : 'O (GIF 18)'}`;
             }
         }
 
