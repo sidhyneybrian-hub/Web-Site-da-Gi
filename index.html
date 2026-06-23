@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pedido de Namoro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap" rel="stylesheet">
+  <style>
+    h1 {
+      color: #ff0080;
+      margin-top: 15vh; /* Margem responsiva */
+      font-size: 6vw; /* Tamanho reduzido */
+      min-height: 8vw;
+    }
+
+    .pedido {
+      margin-bottom: 50px;
+    }
+
+    .botoes {
+      min-height: 10vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 50px;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .botao {
+      font-family: 'Caveat', cursive;
+      display: inline-block;
+      padding: 10px 20px;
+      font-size: 3.5vw; /* Tamanho reduzido */
+      background-color: #ff0080;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      margin: 0 10px;
+      transition: transform 0.3s;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      position: relative;
+    }
+
+    .botao:hover {
+      transform: scale(1.1);
+    }
+
+    .pulse-attention {
+      animation: shake 0.5s ease-in-out infinite;
+    }
+    
+    .popping-heart {
+      position: fixed;
+      font-size: 30px;
+      pointer-events: none; /* Impede que o emoji bloqueie cliques */
+      animation: pop-and-fade 0.7s ease-out forwards;
+      z-index: 100;
+    }
+
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        10%, 30%, 50%, 70%, 90% { transform: translateX(-8px); }
+        20%, 40%, 60%, 80% { transform: translateX(8px); }
+    }
+
+    @keyframes pop-and-fade {
+        0% {
+            transform: scale(0.5);
+            opacity: 1;
+        }
+        50% {
+            transform: scale(1.2);
+            opacity: 0.8;
+        }
+        100% {
+            transform: scale(1.8);
+            opacity: 0;
+        }
+    }
+
+    /* Fundo romântico suave */
+    body {
+      font-family: 'Caveat', cursive;
+      text-align: center;
+      background: radial-gradient(circle at top left, rgba(255, 235, 245, 0.85), transparent 24%),
+                  radial-gradient(circle at bottom right, rgba(255, 210, 230, 0.6), transparent 15%),
+                  linear-gradient(120deg, #ffe7f0 0%, #ffd6e8 35%, #ffeef4 65%, #fff8fb 100%);
+      background-size: 300% 300%;
+      animation: gradientShift 18s ease infinite;
+      color: #5e1849;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      position: relative;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .bg-gif-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    z-index: 0; /* Fica atrás dos botões e textos */
+    pointer-events: none; /* Não bloqueia os cliques */
+}
+
+.random-bg-gif {
+    position: absolute !important;
+    pointer-events: none;
+    opacity: 0.4;
+    object-fit: contain;
+    mix-blend-mode: screen;
+    filter: drop-shadow(0 0 16px rgba(255, 180, 220, 0.4));
+    animation: floatGifs 20s ease-in-out infinite;
+}
+
+.random-bg-gif.highlight-gif {
+    animation-duration: 24s;
+    animation-delay: 1s;
+    opacity: 0.5;
+}
+
+@keyframes floatGifs {
+    0% { transform: translate(-50%, -50%) translateY(0px) rotate(0deg); }
+    25% { transform: translate(-50%, -50%) translateY(-12px) rotate(2deg); }
+    50% { transform: translate(-50%, -50%) translateY(6px) rotate(0deg); }
+    75% { transform: translate(-50%, -50%) translateY(-8px) rotate(-1deg); }
+    100% { transform: translate(-50%, -50%) translateY(0px) rotate(0deg); }
+}
+
+/* Garante que o título e os botões fiquem acima dos GIFs */
+h1, .pedido, .botoes {
+    position: relative;
+    z-index: 10;
+}
+
+    .index-bg {
+      display: none;
+    }
+
+    @media (max-width: 1200px) {
+      h1 {
+        margin-top: 12vh;
+        font-size: 7vw;
+      }
+
+      .botoes {
+        margin-top: 40px;
+      }
+
+      .botao {
+        padding: 10px 18px;
+      }
+    }
+
+    @media (max-width: 900px) {
+      h1 {
+        font-size: 8vw;
+        margin-top: 10vh;
+      }
+
+      .pedido {
+        margin-bottom: 40px;
+      }
+
+      .botoes {
+        flex-direction: column;
+        gap: 16px;
+        margin-top: 30px;
+      }
+
+      .botao {
+        width: 70vw;
+        max-width: 280px;
+        font-size: 5vw;
+      }
+    }
+
+    @media (max-width: 600px) {
+      body {
+        overflow: auto;
+      }
+
+      h1 {
+        font-size: 9vw;
+        min-height: unset;
+        margin-top: 8vh;
+      }
+
+      .pedido {
+        margin-bottom: 30px;
+      }
+
+      .botoes {
+        min-height: auto;
+        padding: 0 10px;
+      }
+
+      .botao {
+        width: 86vw;
+        max-width: none;
+        font-size: 6vw;
+        padding: 12px 14px;
+      }
+    }
+
+    @media (min-width: 1600px) {
+      h1 {
+        font-size: 5vw;
+      }
+
+      .botoes {
+        margin-top: 60px;
+      }
+
+      .botao {
+        font-size: 2.4rem;
+        padding: 14px 28px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="pedido">
+    <h1></h1>
+  </div>
+  <div class="botoes">
+    <button id="sim" class="botao">Sim!</button>
+    <button id="nao" class="botao">Não</button>
+  </div>
+  <div class="bg-gif-container" id="bg-gifs"></div>
+
+  <script src="js/love.js"></script>
+  <script>
+    // Tipagem, botões e coração popping (limpo e sem duplicatas)
+    const simButton = document.getElementById('sim');
+    const naoButton = document.getElementById('nao');
+    const h1 = document.querySelector('h1');
+    const botoesDiv = document.querySelector('.botoes');
+
+    const texto = "Você me ama?";
+    let idx = 0;
+
+    const heartEmojis = ['❤️', '🩷', '🧡', '💛', '💚', '💙', '💜', '💕', '💞', '💗', '💖'];
+
+    function typeWriter() {
+      if (!h1) return;
+      if (idx < texto.length) {
+        h1.textContent += texto.charAt(idx);
+        idx++;
+        setTimeout(typeWriter, 120);
+      } else {
+        if (botoesDiv) botoesDiv.style.opacity = '1';
+        setTimeout(() => { if (simButton) simButton.classList.add('pulse-attention'); }, 1500);
+      }
+    }
+
+    function moverBotaoNao() {
+      if (!naoButton) return;
+      if (getComputedStyle(naoButton).position !== 'absolute') {
+          const rect = naoButton.getBoundingClientRect();
+        // Use position fixed para manter relativo à viewport e evitar clipping
+        naoButton.style.position = 'fixed';
+          naoButton.style.left = `${rect.left}px`;
+          naoButton.style.top = `${rect.top}px`;
+      }
+
+      const padding = 20;
+      const minX = padding;
+      const minY = padding;
+      const maxX = Math.max(minX, Math.floor(window.innerWidth - naoButton.offsetWidth - padding));
+      const maxY = Math.max(minY, Math.floor(window.innerHeight - naoButton.offsetHeight - padding));
+
+      // Escolhe posição segura dentro da tela, com fallback para centralizar
+      // Calcular valores e garantir que fiquem dentro dos limites
+      const safeX = Math.min(maxX, Math.max(minX, Math.floor(Math.random() * (maxX - minX + 1)) + minX));
+      const safeY = Math.min(maxY, Math.max(minY, Math.floor(Math.random() * (maxY - minY + 1)) + minY));
+      naoButton.style.left = `${safeX}px`;
+      naoButton.style.top = `${safeY}px`;
+
+      // Mantém o botão acima dos GIFs e conteúdo
+      naoButton.style.zIndex = 10001;
+      naoButton.style.transform = 'none';
+    }
+
+    function createPoppingHeart(e) {
+        const heart = document.createElement('div');
+        heart.className = 'popping-heart';
+        heart.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+        heart.style.left = `${e.clientX - 15}px`;
+        heart.style.top = `${e.clientY - 15}px`;
+        document.body.appendChild(heart);
+        setTimeout(() => { heart.remove(); }, 700);
+    }
+
+    // Inicia a digitação e listeners
+    document.addEventListener('DOMContentLoaded', () => {
+      typeWriter();
+      if (naoButton) {
+        naoButton.addEventListener('mouseover', moverBotaoNao);
+        naoButton.addEventListener('click', moverBotaoNao);
+      }
+      if (simButton) {
+        simButton.addEventListener('click', () => {
+          // Esconder o botão "Não" quando clicar "Sim"
+          if (naoButton) {
+            naoButton.style.display = 'none';
+          }
+          // Redirecionar após um pequeno delay
+          setTimeout(() => {
+            window.location.href = 'yes.html';
+          }, 300);
+        });
+      }
+      document.body.addEventListener('click', createPoppingHeart);
+    });
+    
+    // Floating background hearts removed; only heart-meteors remain.
+  </script>
+</body>
+</html>
